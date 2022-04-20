@@ -30,14 +30,15 @@ async function updateIpAddressMultipleTimes(browser, n) {
     const page = await browser.newPage();
 
     await page.goto("https://check.torproject.org/");
+    logIpAddress(page);
 
     for (let i = 0; i < n; i++) {
-        logIpAddress(page);
-
         await page.waitForTimeout(12000);
 
         await browser.newIpAddress();
 
         await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+
+        logIpAddress(page);
     }
 }
